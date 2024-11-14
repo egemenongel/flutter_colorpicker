@@ -2,7 +2,6 @@
 //
 // Try to create a Color Picker with other layout on your own :)
 
-import 'dart:developer' as dev;
 import 'dart:math';
 
 import 'package:flutter/gestures.dart';
@@ -1384,7 +1383,6 @@ class ColorPickerArea extends StatelessWidget {
                     _AlwaysWinPanGestureRecognizer>(
               () => _AlwaysWinPanGestureRecognizer(),
               (_AlwaysWinPanGestureRecognizer instance) {
-                dev.log('LOGGED');
                 instance
                   ..onDown = ((details) => _handleGesture(
                       details.globalPosition, context, height, width))

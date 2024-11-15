@@ -1087,11 +1087,13 @@ class ColorPickerSlider extends StatelessWidget {
     Key? key,
     this.displayThumbColor = false,
     this.fullThumbColor = false,
+    this.onPanEnd,
   }) : super(key: key);
 
   final TrackType trackType;
   final HSVColor hsvColor;
   final ValueChanged<HSVColor> onColorChanged;
+  final VoidCallback? onPanEnd;
   final bool displayThumbColor;
   final bool fullThumbColor;
 
@@ -1220,6 +1222,7 @@ class ColorPickerSlider extends StatelessWidget {
               builder: (BuildContext context, BoxConstraints box) {
                 RenderBox? getBox = context.findRenderObject() as RenderBox?;
                 return GestureDetector(
+                  onPanEnd: (_) => onPanEnd?.call(),
                   onPanDown: (DragDownDetails details) => getBox != null
                       ? slideEvent(getBox, box, details.globalPosition)
                       : null,

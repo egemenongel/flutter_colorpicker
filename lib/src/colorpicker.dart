@@ -241,6 +241,7 @@ class _ColorPickerState extends State<ColorPicker> {
         if (widget.onHsvColorChanged != null)
           widget.onHsvColorChanged!(currentHsvColor);
       },
+      onPanEnd: widget.onPanEndGesture,
       displayThumbColor: widget.displayThumbColor,
     );
   }

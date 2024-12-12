@@ -1002,6 +1002,7 @@ class ColorPickerInput extends StatefulWidget {
     this.enableAlpha = true,
     this.embeddedText = false,
     this.disable = false,
+    this.disableLabel = false,
   }) : super(key: key);
 
   final Color color;
@@ -1009,7 +1010,7 @@ class ColorPickerInput extends StatefulWidget {
   final bool enableAlpha;
   final bool embeddedText;
   final bool disable;
-
+  final bool disableLabel;
   @override
   State<ColorPickerInput> createState() => _ColorPickerInputState();
 }
@@ -1042,7 +1043,7 @@ class _ColorPickerInputState extends State<ColorPickerInput> {
     return Padding(
       padding: const EdgeInsets.only(top: 5.0),
       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        if (!widget.embeddedText)
+        if ((!widget.disableLabel) && (!widget.embeddedText))
           Text('Hex', style: Theme.of(context).textTheme.bodyLarge),
         const SizedBox(width: 10),
         SizedBox(
@@ -1056,7 +1057,11 @@ class _ColorPickerInputState extends State<ColorPickerInput> {
             ],
             decoration: InputDecoration(
               isDense: true,
-              label: widget.embeddedText ? const Text('Hex') : null,
+              label: widget.embeddedText
+                  ? widget.disableLabel
+                      ? null
+                      : const Text('Hex')
+                  : null,
               contentPadding: const EdgeInsets.symmetric(vertical: 5),
             ),
             onChanged: (String value) {

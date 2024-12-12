@@ -39,6 +39,9 @@ class ColorPicker extends StatefulWidget {
     this.colorHistory,
     this.onHistoryChanged,
     this.onPanEndGesture,
+
+    /// Added to be able to add widget next to the picker
+    this.customizedColorPicker = false,
   }) : super(key: key);
 
   final Color pickerColor;
@@ -57,6 +60,7 @@ class ColorPicker extends StatefulWidget {
   final BorderRadius pickerAreaBorderRadius;
   final bool hexInputBar;
   final VoidCallback? onPanEndGesture;
+  final bool customizedColorPicker;
 
   /// Allows setting the color using text input, via [TextEditingController].
   ///
@@ -305,11 +309,42 @@ class _ColorPickerState extends State<ColorPicker> {
         widget.portraitOnly) {
       return Column(
         children: [
-          SizedBox(
-            width: widget.colorPickerWidth,
-            height: widget.colorPickerWidth * widget.pickerAreaHeightPercent,
-            child: colorPicker(),
-          ),
+          if (widget.customizedColorPicker) ...[
+            Row(
+              children: [
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(16)),
+                    child: SizedBox(
+                      height: 100,
+                      width: 200,
+                      child: colorPicker(),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: ColorPickerInput(
+                    currentHsvColor.toColor(),
+                    (Color color) {
+                      setState(
+                          () => currentHsvColor = HSVColor.fromColor(color));
+                      widget.onColorChanged(currentHsvColor.toColor());
+                      if (widget.onHsvColorChanged != null)
+                        widget.onHsvColorChanged!(currentHsvColor);
+                    },
+                    enableAlpha: widget.enableAlpha,
+                    disableLabel: true,
+                  ),
+                ),
+              ],
+            ),
+          ] else ...[
+            SizedBox(
+              width: widget.colorPickerWidth,
+              height: widget.colorPickerWidth * widget.pickerAreaHeightPercent,
+              child: colorPicker(),
+            ),
+          ],
           Padding(
             padding: const EdgeInsets.fromLTRB(15.0, 5.0, 10.0, 5.0),
             child: Row(

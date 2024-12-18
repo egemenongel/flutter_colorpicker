@@ -1043,9 +1043,10 @@ class _ColorPickerInputState extends State<ColorPickerInput> {
     return Padding(
       padding: const EdgeInsets.only(top: 5.0),
       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        if ((!widget.disableLabel) && (!widget.embeddedText))
+        if ((!widget.disableLabel) && (!widget.embeddedText)) ...[
           Text('Hex', style: Theme.of(context).textTheme.bodyLarge),
-        const SizedBox(width: 10),
+          const SizedBox(width: 10),
+        ],
         SizedBox(
           width: (Theme.of(context).textTheme.bodyMedium?.fontSize ?? 14) * 10,
           child: TextField(
@@ -1062,7 +1063,12 @@ class _ColorPickerInputState extends State<ColorPickerInput> {
                       ? null
                       : const Text('Hex')
                   : null,
-              contentPadding: const EdgeInsets.symmetric(vertical: 5),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(28),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(28),
+              ),
             ),
             onChanged: (String value) {
               String input = value;

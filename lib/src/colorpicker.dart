@@ -42,6 +42,8 @@ class ColorPicker extends StatefulWidget {
 
     /// Added to be able to add widget next to the picker
     this.customizedColorPicker = false,
+    this.onDropperPressed,
+    this.dropperIcon,
   }) : super(key: key);
 
   final Color pickerColor;
@@ -61,6 +63,8 @@ class ColorPicker extends StatefulWidget {
   final bool hexInputBar;
   final VoidCallback? onPanEndGesture;
   final bool customizedColorPicker;
+  final VoidCallback? onDropperPressed;
+  final IconData? dropperIcon;
 
   /// Allows setting the color using text input, via [TextEditingController].
   ///
@@ -322,18 +326,48 @@ class _ColorPickerState extends State<ColorPicker> {
                     ),
                   ),
                 ),
+                const SizedBox(width: 12),
                 Expanded(
-                  child: ColorPickerInput(
-                    currentHsvColor.toColor(),
-                    (Color color) {
-                      setState(
-                          () => currentHsvColor = HSVColor.fromColor(color));
-                      widget.onColorChanged(currentHsvColor.toColor());
-                      if (widget.onHsvColorChanged != null)
-                        widget.onHsvColorChanged!(currentHsvColor);
-                    },
-                    enableAlpha: widget.enableAlpha,
-                    disableLabel: true,
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: widget.onDropperPressed,
+                        child: Container(
+                          width: (Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.fontSize ??
+                                  14) *
+                              10,
+                          height: 48,
+                          decoration: const BoxDecoration(
+                            border: Border.fromBorderSide(
+                              BorderSide(
+                                color: Color(0xff747E7E),
+                              ),
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(28),
+                            ),
+                          ),
+                          child: Icon(
+                            widget.dropperIcon ?? Icons.colorize_outlined,
+                          ),
+                        ),
+                      ),
+                      ColorPickerInput(
+                        currentHsvColor.toColor(),
+                        (Color color) {
+                          setState(() =>
+                              currentHsvColor = HSVColor.fromColor(color));
+                          widget.onColorChanged(currentHsvColor.toColor());
+                          if (widget.onHsvColorChanged != null)
+                            widget.onHsvColorChanged!(currentHsvColor);
+                        },
+                        enableAlpha: widget.enableAlpha,
+                        disableLabel: true,
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -346,9 +380,11 @@ class _ColorPickerState extends State<ColorPicker> {
             ),
           ],
           Padding(
-            padding: const EdgeInsets.fromLTRB(15.0, 5.0, 10.0, 5.0),
+            padding: widget.customizedColorPicker
+                ? EdgeInsets.zero
+                : const EdgeInsets.fromLTRB(15.0, 5.0, 10.0, 5.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 /// TO ADD COLOR HISTORY
                 // GestureDetector(
@@ -363,11 +399,15 @@ class _ColorPickerState extends State<ColorPicker> {
                 // ),
                 Expanded(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                          height: 40.0,
-                          width: widget.colorPickerWidth - 75.0,
-                          child: sliderByPaletteType()),
+                        height: 40.0,
+                        width: widget.customizedColorPicker
+                            ? double.infinity
+                            : widget.colorPickerWidth - 75.0,
+                        child: sliderByPaletteType(),
+                      ),
                       if (widget.enableAlpha)
                         SizedBox(
                           height: 40.0,

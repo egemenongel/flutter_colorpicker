@@ -366,35 +366,36 @@ class _ColorPickerState extends State<ColorPicker> {
                                 ),
                               ),
                             ),
-                            if (widget.onDeletePressed != null)
+                            if (widget.onDeletePressed != null) ...[
                               const SizedBox(width: 4),
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: widget.onDeletePressed,
-                                child: Container(
-                                  width: (Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium
-                                              ?.fontSize ??
-                                          14) *
-                                      10,
-                                  height: 38,
-                                  decoration: const BoxDecoration(
-                                    border: Border.fromBorderSide(
-                                      BorderSide(
-                                        color: Color(0xff747E7E),
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: widget.onDeletePressed,
+                                  child: Container(
+                                    width: (Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium
+                                                ?.fontSize ??
+                                            14) *
+                                        10,
+                                    height: 38,
+                                    decoration: const BoxDecoration(
+                                      border: Border.fromBorderSide(
+                                        BorderSide(
+                                          color: Color(0xff747E7E),
+                                        ),
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(28),
                                       ),
                                     ),
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(28),
+                                    child: Icon(
+                                      widget.dropperIcon ?? Icons.delete,
                                     ),
-                                  ),
-                                  child: Icon(
-                                    widget.dropperIcon ?? Icons.delete,
                                   ),
                                 ),
                               ),
-                            ),
+                            ]
                           ],
                         ),
                       ),

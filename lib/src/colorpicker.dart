@@ -320,8 +320,8 @@ class _ColorPickerState extends State<ColorPicker> {
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(16)),
                     child: SizedBox(
-                      height: 100,
-                      width: 200,
+                      height: 90,
+                      width: 100,
                       child: colorPicker(),
                     ),
                   ),
@@ -339,7 +339,7 @@ class _ColorPickerState extends State<ColorPicker> {
                                       ?.fontSize ??
                                   14) *
                               10,
-                          height: 48,
+                          height: 38,
                           decoration: const BoxDecoration(
                             border: Border.fromBorderSide(
                               BorderSide(
@@ -461,7 +461,7 @@ class _ColorPickerState extends State<ColorPicker> {
               enableAlpha: widget.enableAlpha,
               embeddedText: false,
             ),
-          const SizedBox(height: 20.0),
+          if (!widget.customizedColorPicker) const SizedBox(height: 20.0),
         ],
       );
     } else {

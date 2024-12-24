@@ -71,6 +71,28 @@ class _HSVColorPickerExampleState extends State<HSVColorPickerExample> {
     return ListView(
       children: [
         const SizedBox(height: 20),
+        ColorPicker(
+          pickerColor: widget.pickerColor,
+          onColorChanged: widget.onColorChanged,
+          colorPickerWidth: 300,
+          pickerAreaHeightPercent: 0.7,
+          enableAlpha: false,
+          labelTypes: _labelTypes,
+          displayThumbColor: true,
+          paletteType: _paletteType,
+          showLabel: false,
+          pickerAreaBorderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(2),
+            topRight: Radius.circular(2),
+          ),
+          hexInputBar: false,
+          colorHistory: null,
+          onHistoryChanged: widget.onHistoryChanged,
+          customizedColorPicker: true,
+          onDropperPressed: () {
+            log('DROPPER');
+          },
+        ),
         Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,

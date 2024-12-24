@@ -393,6 +393,9 @@ class _ColorPickerState extends State<ColorPicker> {
                                     ),
                                     child: Icon(
                                       widget.deleteIcon ?? Icons.delete,
+                                      color: widget.onDeletePressed == null
+                                          ? Colors.black38
+                                          : null,
                                     ),
                                   ),
                                 ),

@@ -45,6 +45,7 @@ class ColorPicker extends StatefulWidget {
     this.onDropperPressed,
     this.dropperIcon,
     this.deleteIcon,
+    this.hasDelete = false,
     this.onDeletePressed,
   }) : super(key: key);
 
@@ -68,6 +69,7 @@ class ColorPicker extends StatefulWidget {
   final VoidCallback? onDropperPressed;
   final IconData? dropperIcon;
   final IconData? deleteIcon;
+  final bool hasDelete;
   final VoidCallback? onDeletePressed;
 
   /// Allows setting the color using text input, via [TextEditingController].
@@ -366,7 +368,7 @@ class _ColorPickerState extends State<ColorPicker> {
                                 ),
                               ),
                             ),
-                            if (widget.onDeletePressed != null) ...[
+                            if (widget.hasDelete) ...[
                               const SizedBox(width: 4),
                               Expanded(
                                 child: GestureDetector(
@@ -390,7 +392,7 @@ class _ColorPickerState extends State<ColorPicker> {
                                       ),
                                     ),
                                     child: Icon(
-                                      widget.dropperIcon ?? Icons.delete,
+                                      widget.deleteIcon ?? Icons.delete,
                                     ),
                                   ),
                                 ),

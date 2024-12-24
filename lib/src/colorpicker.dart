@@ -67,7 +67,7 @@ class ColorPicker extends StatefulWidget {
   final VoidCallback? onPanEndGesture;
   final bool customizedColorPicker;
   final VoidCallback? onDropperPressed;
-  final IconData? dropperIcon;
+  final Widget? dropperIcon;
   final IconData? deleteIcon;
   final bool hasDelete;
   final VoidCallback? onDeletePressed;
@@ -361,10 +361,10 @@ class _ColorPickerState extends State<ColorPicker> {
                                       Radius.circular(28),
                                     ),
                                   ),
-                                  child: Icon(
-                                    widget.dropperIcon ??
+                                  child: widget.dropperIcon ??
+                                      const Icon(
                                         Icons.colorize_outlined,
-                                  ),
+                                      ),
                                 ),
                               ),
                             ),

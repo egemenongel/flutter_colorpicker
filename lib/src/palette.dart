@@ -1042,49 +1042,56 @@ class _ColorPickerInputState extends State<ColorPickerInput> {
     }
     return Padding(
       padding: const EdgeInsets.only(top: 5.0),
-      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        if ((!widget.disableLabel) && (!widget.embeddedText)) ...[
-          Text('Hex', style: Theme.of(context).textTheme.bodyLarge),
-          const SizedBox(width: 10),
-        ],
-        SizedBox(
-          width: (Theme.of(context).textTheme.bodyMedium?.fontSize ?? 14) * 10,
-          child: TextField(
-            enabled: !widget.disable,
-            controller: textEditingController,
-            inputFormatters: [
-              UpperCaseTextFormatter(),
-              FilteringTextInputFormatter.allow(RegExp(kValidHexPattern)),
-            ],
-            decoration: InputDecoration(
-              isDense: true,
-              label: widget.embeddedText
-                  ? widget.disableLabel
-                      ? null
-                      : const Text('Hex')
-                  : null,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(28),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          if ((!widget.disableLabel) && (!widget.embeddedText)) ...[
+            Text('Hex', style: Theme.of(context).textTheme.bodyLarge),
+            const SizedBox(width: 10),
+          ],
+          SizedBox(
+            height: 38,
+            width:
+                (Theme.of(context).textTheme.bodyMedium?.fontSize ?? 14) * 10,
+            child: TextField(
+              enabled: !widget.disable,
+              controller: textEditingController,
+              inputFormatters: [
+                UpperCaseTextFormatter(),
+                FilteringTextInputFormatter.allow(RegExp(kValidHexPattern)),
+              ],
+              decoration: InputDecoration(
+                alignLabelWithHint: true,
+                isDense: true,
+                label: widget.embeddedText
+                    ? widget.disableLabel
+                        ? null
+                        : const Text('Hex')
+                    : null,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(28),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(28),
+                ),
               ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(28),
-              ),
+              onChanged: (String value) {
+                String input = value;
+                if (value.length == 9) {
+                  input = value.split('').getRange(7, 9).join() +
+                      value.split('').getRange(1, 7).join();
+                }
+                final Color? color = colorFromHex(input);
+                if (color != null) {
+                  widget.onColorChanged(color);
+                  inputColor = color.value;
+                }
+              },
             ),
-            onChanged: (String value) {
-              String input = value;
-              if (value.length == 9) {
-                input = value.split('').getRange(7, 9).join() +
-                    value.split('').getRange(1, 7).join();
-              }
-              final Color? color = colorFromHex(input);
-              if (color != null) {
-                widget.onColorChanged(color);
-                inputColor = color.value;
-              }
-            },
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }

@@ -44,6 +44,8 @@ class ColorPicker extends StatefulWidget {
     this.customizedColorPicker = false,
     this.onDropperPressed,
     this.dropperIcon,
+    this.deleteIcon,
+    this.onDeletePressed,
   }) : super(key: key);
 
   final Color pickerColor;
@@ -65,6 +67,8 @@ class ColorPicker extends StatefulWidget {
   final bool customizedColorPicker;
   final VoidCallback? onDropperPressed;
   final IconData? dropperIcon;
+  final IconData? deleteIcon;
+  final VoidCallback? onDeletePressed;
 
   /// Allows setting the color using text input, via [TextEditingController].
   ///
@@ -326,33 +330,72 @@ class _ColorPickerState extends State<ColorPicker> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 8),
                 Expanded(
                   child: Column(
                     children: [
-                      GestureDetector(
-                        onTap: widget.onDropperPressed,
-                        child: Container(
-                          width: (Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.fontSize ??
-                                  14) *
-                              10,
-                          height: 38,
-                          decoration: const BoxDecoration(
-                            border: Border.fromBorderSide(
-                              BorderSide(
-                                color: Color(0xff747E7E),
+                      SizedBox(
+                        width: 140,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: widget.onDropperPressed,
+                                child: Container(
+                                  width: (Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium
+                                              ?.fontSize ??
+                                          14) *
+                                      10,
+                                  height: 38,
+                                  decoration: const BoxDecoration(
+                                    border: Border.fromBorderSide(
+                                      BorderSide(
+                                        color: Color(0xff747E7E),
+                                      ),
+                                    ),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(28),
+                                    ),
+                                  ),
+                                  child: Icon(
+                                    widget.dropperIcon ??
+                                        Icons.colorize_outlined,
+                                  ),
+                                ),
                               ),
                             ),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(28),
+                            if (widget.onDeletePressed != null)
+                              const SizedBox(width: 4),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: widget.onDeletePressed,
+                                child: Container(
+                                  width: (Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium
+                                              ?.fontSize ??
+                                          14) *
+                                      10,
+                                  height: 38,
+                                  decoration: const BoxDecoration(
+                                    border: Border.fromBorderSide(
+                                      BorderSide(
+                                        color: Color(0xff747E7E),
+                                      ),
+                                    ),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(28),
+                                    ),
+                                  ),
+                                  child: Icon(
+                                    widget.dropperIcon ?? Icons.delete,
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                          child: Icon(
-                            widget.dropperIcon ?? Icons.colorize_outlined,
-                          ),
+                          ],
                         ),
                       ),
                       ColorPickerInput(
